@@ -161,6 +161,21 @@ class Git:
             overrides += ["-c", f"filter.{name}.required=false"]
         return overrides
 
+    def validate_local_config_encoding(self, common: Path) -> None:
+        """Reject invalid local config bytes before asking Git to inspect filters.
+
+        Git configuration can name a checkout filter.  A malformed name cannot
+        safely be overridden after lossy decoding, so verify the common config
+        before `git config` reads and reports those names.
+        """
+        config = common / "config"
+        try:
+            config.read_text(encoding="utf-8", errors="strict")
+        except UnicodeError as error:
+            raise WorktreeError(
+                "Git configuration is not valid UTF-8; refusing to inspect or run checkout filters."
+            ) from error
+
     def commit(self, repo: Path, ref: str, label: str) -> str:
         if not ref or any(ord(character) < 32 for character in ref):
             raise WorktreeError(f"{label} must name an existing commit.")
@@ -197,12 +212,14 @@ def create(args, git: Git) -> dict:
         raise WorktreeError(f"--repo must name the repository root: {top}")
     common = absolute_path(git.run(repo, "rev-parse", "--path-format=absolute", "--git-common-dir").stdout.strip(), "Git metadata")
     reject_links(common)
+    git.validate_local_config_encoding(common)
     git.commit(repo, "HEAD", "HEAD (an initial commit is required)")
     base = git.commit(repo, args.base, "base commit")
     filters = git.disable_filters(repo, recursive=True)
     git.clean(repo, filters)
 
-    root = absolute_path(args.root, "root") if args.root is not None else repo.parent / (repo.name + "-deliberate-worktrees")
+    root = (absolute_path(args.root, "root") if args.root is not None
+            else absolute_path(str(repo.parent / (repo.name + "-deliberate-worktrees")), "root"))
     reject_links(root)
     registered = git.run(repo, "worktree", "list", "--porcelain", "-z").stdout.split("\0")
     existing_roots = []
