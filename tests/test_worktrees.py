@@ -72,7 +72,7 @@ class WorktreeTests(unittest.TestCase):
         self.assertEqual(data["base_commit"], self.initial)
         self.assertEqual(data["branch"], "deliberate/feature-one/unit-one")
         self.assertEqual(Path(data["repo"]), self.repo.resolve())
-        self.assertEqual(Path(data["worktree"]), self.root / "feature-one--unit-one")
+        self.assertEqual(Path(data["worktree"]), (self.root / "feature-one--unit-one").resolve())
         self.assertFalse(self.root.exists())
         self.assertEqual(self.git("show-ref").stdout, refs_before)
         self.assertEqual((self.repo / ".git" / "index").read_bytes(), index_before)
@@ -95,7 +95,7 @@ class WorktreeTests(unittest.TestCase):
              "--run-id", "run", "--task-id", "task"], capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(Path(json.loads(result.stdout)["root"]), self.directory / "source repo-deliberate-worktrees")
+        self.assertEqual(Path(json.loads(result.stdout)["root"]), (self.directory / "source repo-deliberate-worktrees").resolve())
 
     def test_explicit_base_is_used_and_source_branch_unchanged(self):
         (self.repo / "hello.txt").write_text("second\n")

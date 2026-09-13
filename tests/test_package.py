@@ -21,7 +21,7 @@ class PackageTests(unittest.TestCase):
     def test_manifest_is_self_contained(self):
         manifest = json.loads((ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "deliberate-dev")
-        self.assertEqual(manifest["version"], "0.1.1")
+        self.assertEqual(manifest["version"], "0.1.2")
         self.assertEqual(set(manifest), {"name", "version", "description", "author"})
         self.assertFalse((ROOT / ".codex-plugin").exists())
 

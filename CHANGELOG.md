@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Compare canonical Windows worktree paths in tests, avoiding false failures from 8.3 temporary-directory aliases.
+
 ## 0.1.1
 
 - Reject invalid UTF-8 in local Git configuration before filter inspection can invoke a configured checkout filter.
