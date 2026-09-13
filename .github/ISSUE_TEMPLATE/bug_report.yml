@@ -1,0 +1,24 @@
+name: Bug report
+description: Report a reproducible problem with a skill or helper.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include expected behavior. Report security vulnerabilities privately.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Use a minimal example and redact private information.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Plugin version, Claude Code version, operating system, Python, and Git versions.
+    validations:
+      required: true

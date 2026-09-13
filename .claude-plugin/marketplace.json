@@ -1,0 +1,13 @@
+{
+  "name": "deliberate-dev-claude",
+  "description": "A disciplined software-delivery workflow for Claude Code: clarify, plan, test first, isolate work, review, and verify delivery.",
+  "plugins": [
+    {
+      "name": "deliberate-dev",
+      "source": "./"
+    }
+  ],
+  "owner": {
+    "name": "Zaheer Yousaf"
+  }
+}

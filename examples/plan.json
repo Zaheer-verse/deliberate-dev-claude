@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "title": "Fictional example: normalize a project label",
+  "discovery": {
+    "what": {
+      "answer": "Provide a local function that trims a project label and rejects an empty label.",
+      "source": "Fictional user brief for this example."
+    },
+    "why": {
+      "answer": "Avoid saving accidental whitespace and blank names in project records.",
+      "source": "Fictional user brief for this example."
+    },
+    "who": {
+      "answer": "Developers calling a local project-label library.",
+      "source": "Fictional user brief for this example."
+    },
+    "context": [
+      "Illustrative plan only: no implementation, tests or reviews have been executed.",
+      "Python library; no network, database, authentication or deployment required."
+    ]
+  },
+  "acceptance_criteria": [
+    {
+      "id": "AC1",
+      "description": "Given '  Study plan  ', return 'Study plan'."
+    },
+    {
+      "id": "AC2",
+      "description": "Given '' or only whitespace, raise ValueError with a clear message."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T1",
+      "title": "Normalize nonempty project labels",
+      "scope": "Add the normalization function and behavioral tests for leading/trailing whitespace.",
+      "acceptance_criteria": [
+        "AC1"
+      ],
+      "owned_paths": [
+        "src/project_labels.py",
+        "tests/test_project_labels.py"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "T2",
+      "title": "Reject empty project labels",
+      "scope": "Extend the reviewed normalization function with empty-input validation and regression tests.",
+      "acceptance_criteria": [
+        "AC2"
+      ],
+      "owned_paths": [
+        "src/project_labels.py",
+        "tests/test_project_labels.py"
+      ],
+      "dependencies": [
+        "T1"
+      ]
+    }
+  ],
+  "integration": {}
+}

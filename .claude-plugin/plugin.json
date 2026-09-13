@@ -1,0 +1,8 @@
+{
+  "name": "deliberate-dev",
+  "version": "0.1.0",
+  "description": "Clarify requests, plan small tasks, write tests first in isolated Git worktrees, and review before delivery.",
+  "author": {
+    "name": "Zaheer Yousaf"
+  }
+}
